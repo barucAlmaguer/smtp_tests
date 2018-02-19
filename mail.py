@@ -30,6 +30,7 @@ class MailSender:
             self.text += "\n" + text
     def sendMail(self):
         #genera encabezados
+        print("\tenlazando encabezados a correo...")
         msg = MIMEMultipart('mixed')
         msg['Subject'] = self.subject
         if self.sender_name is not None:
@@ -40,6 +41,7 @@ class MailSender:
         #enlaza mensaje
         text_message = MIMEText(self.text, 'plain')
         msg.attach(text_message)
+        print("\tiniciando envio de correo a nombre de {}...".format(sender))
         #envia mail
         mailServer = smtplib.SMTP('mail.smtp2go.com', 2525) # 8025, 587 and 25 can also be used.
         mailServer.ehlo()
@@ -48,6 +50,7 @@ class MailSender:
         mailServer.login(self.smtp2go_user, self.smtp2go_pass)
         mailServer.sendmail(self.sender_mail, self.recipient, msg.as_string())
         mailServer.close()
+        print("\tenvio de correo finalizado")
 
 
 
@@ -59,7 +62,6 @@ def send_mail(_sender = None, _recipient = None, _subject = "", _text = ""):
 
     text_message = MIMEText(_text, 'plain')
     msg.attach(text_message)
-
     mailServer = smtplib.SMTP('mail.smtp2go.com', 2525) # 8025, 587 and 25 can also be used.
     mailServer.ehlo()
     mailServer.starttls()
@@ -70,11 +72,14 @@ def send_mail(_sender = None, _recipient = None, _subject = "", _text = ""):
 
 if __name__ == "__main__":
     m = MailSender()
+    print("Generando encabezados del correo...")
     m.setSenderName("Baruquillo")
     m.setSenderMail("baruc.almaguer@gmail.com")
     m.setRecipient("baruc@disruptiveangels.com")
-    m.setSubject("Prueba clase sender")
+    m.setSubject("Phishing baruc")
     m.setText("Probando 1 2 3")
     m.appendText("2da linea")
     m.appendText("3ra linea")
+    m.appendText("4ta linea")
+    print("Enviando correo...")
     m.sendMail()
