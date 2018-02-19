@@ -68,8 +68,8 @@ def send_mail(_sender = None, _recipient = None, _subject = "", _text = ""):
     mailServer.sendmail(sender, _recipient, msg.as_string())
     mailServer.close()
 
-m = MailSender()
 if __name__ == "__main__":
+    m = MailSender()
     m.setSenderName("Baruquillo")
     m.setSenderMail("baruc.almaguer@gmail.com")
     m.setRecipient("baruc@disruptiveangels.com")
